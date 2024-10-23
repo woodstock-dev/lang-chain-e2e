@@ -1,0 +1,48 @@
+[2024-09-05 11:06:44,284] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-09-05 11:07:41,051] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-09-05 11:08:31,583] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-18 11:30:18,178] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-18 11:30:18,475] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 404 Not Found"
+[2024-10-18 11:30:52,245] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-18 11:43:58,172] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-18 12:14:41,305] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 404 Not Found"
+[2024-10-23 15:27:55,685] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 404 Not Found"
+[2024-10-23 15:29:09,044] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 15:29:53,303] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 15:30:35,516] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 15:32:35,000] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 15:45:45,127] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 15:56:04,036] (SentenceTransformer.py . __init__ :: 208) -- Use pytorch device_name: mps
+[2024-10-23 15:56:04,036] (SentenceTransformer.py . __init__ :: 216) -- Load pretrained SentenceTransformer: llama3.2
+[2024-10-23 15:56:04,128] (SentenceTransformer.py . _load_auto_model :: 1508) -- No sentence-transformers model found with name sentence-transformers/llama3.2. Creating a new one with mean pooling.
+[2024-10-23 15:57:00,925] (SentenceTransformer.py . __init__ :: 208) -- Use pytorch device_name: mps
+[2024-10-23 15:57:00,925] (SentenceTransformer.py . __init__ :: 216) -- Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2024-10-23 15:57:16,230] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 15:58:40,100] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 16:11:35,500] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 16:11:59,280] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 16:12:01,274] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 16:12:30,792] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 16:12:32,703] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 16:19:49,269] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 16:19:50,844] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 16:20:09,947] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 16:31:43,818] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 16:46:01,800] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 16:49:38,312] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 16:52:35,366] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 17:06:06,625] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:07:28,250] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:07:28,275] (base.py . similarity_search_with_relevance_scores :: 580) -- No relevant docs were retrieved using the relevance score threshold 0.2
+[2024-10-23 17:07:28,356] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 17:08:03,508] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:08:03,536] (base.py . similarity_search_with_relevance_scores :: 580) -- No relevant docs were retrieved using the relevance score threshold 0.2
+[2024-10-23 17:08:03,610] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 17:09:03,982] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:09:04,979] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+[2024-10-23 17:09:40,853] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 17:22:53,139] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:23:33,793] (posthog.py . __init__ :: 20) -- Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[2024-10-23 17:36:34,036] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:37:04,995] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
+[2024-10-23 17:37:06,454] (_client.py . _send_single_request :: 1038) -- HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
