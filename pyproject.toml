@@ -8,13 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
-
 pypdf = "^4.3.1"
 chromadb = "^0.5.5"
 langchain-ollama = "^0.2.0"
 langchain-community = "^0.3.2"
 sentence-transformers = "^3.2.1"
-langchain-huggingface = "^0.1.0"
 langchain-chroma = "^0.1.4"
 [build-system]
 requires = ["poetry-core"]

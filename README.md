@@ -1,5 +1,5 @@
 <!--
- Copyright 2024 Google, LLC
+ Copyright 2024 Ryan McGuinness, LLC
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
  limitations under the License.
 -->
 # Langchain End-to-End
+
+This is a complete fork from my Google repository as it uses
+all local resources and not Google or Gemini.
 
 ## Prerequisites
 
