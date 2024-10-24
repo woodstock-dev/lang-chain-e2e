@@ -31,7 +31,7 @@ def main():
     llm = OllamaLLM(model="llama3.2")
     
     print("** Type 'exit' or 'quit' to end the program")
-    while (True):
+    while True:
         print("Query:", end=" ")
         try:
             line = input()

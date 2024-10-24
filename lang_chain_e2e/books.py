@@ -13,103 +13,118 @@
 # limitations under the License.
 
 import os
-from typing import List
 
+import chromadb
+from chromadb import EmbeddingFunction, Documents
+
+from chromadb.api.models.Collection import Collection
+from langchain_chroma import Chroma
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains import create_retrieval_chain
+from langchain_core.embeddings import Embeddings
 from langchain_ollama.llms import OllamaLLM
-from langchain_core.documents.base import Document
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import PromptTemplate
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.vectorstores.base import VectorStore
+from langchain_core.vectorstores.base import Collection
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.vectorstores import Chroma
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_ollama import OllamaEmbeddings
+
 from .utils import print_with_time, SuppressStdout
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama import OllamaEmbeddings
 
 DB_DIRECTORY = 'db'
 DOCUMENT_SOURCE_DIRECTORY = 'third_party/books'
 
-CHUNK_SIZE=256**3
-CHUNK_OVERLAP=20
+CHUNK_SIZE=2000
+CHUNK_OVERLAP=50
 HIDE_SOURCE_DOCUMENTS=False
 
-# Prompt Template
-TEMPLATE = """Use the following content to answer the questions related to the books, characters, authors and time periods of writing.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-Context: {context}
-Question: {question}
-Answer:"""
+embeddingModel = OllamaEmbeddings(model="llama3.2")
 
-QA_CHAIN_PROMPT = PromptTemplate(
-    input_variables=["context", "question"],
-    template=TEMPLATE,
+class MyEmbeddingFunction(EmbeddingFunction):
+    def __call__(self, input: Documents) -> Embeddings:
+        return embeddingModel.embed_documents(input)
+
+
+system_prompt = (
+    "You are an assistant for question-answering tasks. "
+    "Use the following pieces of retrieved context to answer "
+    "the question. If you don't know the answer, say that you "
+    "don't know. Use three sentences maximum and keep the "
+    "answer concise."
+    "\n\n"
+    "{context}"
 )
 
-def chunk_docs() -> List[Document]:
+def read_files(native_db):
     """This method loads the PDF files from the source directory
     and uses the explicit PyPDFLoader to ensure each PDF is broken
     down into individual pages for citation."""
+    
+    collection = get_collection(native_db)
 
-    data: List[Document] = []
     print_with_time('Loading PDFs')
     files = os.listdir(DOCUMENT_SOURCE_DIRECTORY)
+    
     for file in files:
         if file.endswith('.pdf'):
             loader = PyPDFLoader(f'{DOCUMENT_SOURCE_DIRECTORY}/{file}')
-            original_data = loader.load()
-            print(f'{file} - Pages: {len(original_data)}')
-            data.extend(original_data)
+            pages = loader.load()
+            
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+            chunks = text_splitter.split_documents(pages)
+            
+            print(f'{file} - Pages: {len(pages)}')
+            
+            for index, chunk in enumerate(chunks):
+                collection.upsert(
+                    ids=[chunk.metadata.get("source") + str(index)], metadatas=chunk.metadata,
+                    documents=chunk.page_content
+                )
 
-    print(f'total pages: {len(data)}')
 
-    print_with_time('Splitting PDFs')
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
-    all_splits = text_splitter.split_documents(data)
-    print_with_time(f'Total chunks: {len(all_splits)}')
-    return all_splits
-
-
-def get_persistent_vector_store(chunked_docs, embedding_function) -> VectorStore:
+def get_collection(native_db) -> Collection:
     with SuppressStdout():
-        # ,
-        #                 persist_directory=DB_DIRECTORY
-        #if not os.path.isdir(DB_DIRECTORY):
-            vector_db = Chroma.from_documents(
-                documents=chunked_docs,
-                embedding=embedding_function, 
-                collection_name='books')
-            vector_db.persist()
-            return vector_db
-        #else:
-        #    return Chroma(persist_directory=DB_DIRECTORY, embedding_function=embedding_function)
+        print("DEBUG: call get_collection()")
+        collection = None
+        try:
+            # Delete all documents
+            native_db.delete_collection("books")
+        except:
+            pass
+        finally:
+            collection: Collection = native_db.get_or_create_collection("books", embedding_function=MyEmbeddingFunction())
+        return collection
         
-
+        
 def format_docs(docs):
     """A simple document formatter if the type of document was not chunked"""
     return "\n".join(doc.page_content for doc in docs)
 
-
-def get_embeddings_model():
-    model =  OllamaEmbeddings(
-        model="llama3.2",
-    )
-    return model
-
-
 def main():
     
-    embedding_function=get_embeddings_model()
-
-    # 1) Read the PDFs and chunk them into smaller pieces for embeddings
-    chunked_docs = chunk_docs()
-    # 2) Generate the embeddings and store them in an in-memory vector store
-    vector_store = get_persistent_vector_store(chunked_docs, embedding_function)
-    # 3) Load a chat large language model to interpret questions using the vector store embeddings
     llm = OllamaLLM(model="llama3.2")
+        
+    native_db = chromadb.PersistentClient("./data_store")
     
-    # 4) Create the QA Chain using LCEL (Lang Chain Expression Language)
+    read_files(native_db)
     
+    db = Chroma(client=native_db, collection_name="books", embedding_function=embeddingModel)
+      
+    prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+    )
+
+    # Initialize the primary chain outside the Q&A while loop.
+    question_answer_chain = create_stuff_documents_chain(llm, prompt)
+    retriever = db.as_retriever(
+        search_type="mmr",
+        search_kwargs={'k': 100, 'lambda_mult': 0.25} # Get many documents back, we do 100 because we're dealing with books
+    )
+
     # Start the REPL
     while True:
         query = input("\nQuery: ")
@@ -118,16 +133,10 @@ def main():
         if query.strip() == "":
             continue
 
-        qa_chain = (
-            {
-                "context": vector_store.as_retriever(search_type="mmr") | format_docs,
-                "question": RunnablePassthrough()
-            }
-            | QA_CHAIN_PROMPT
-            | llm
-            | StrOutputParser()
-        ) 
-        
+        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
         # Call the QA chain to print the response
-        resp = qa_chain.invoke(query)
+        resp = rag_chain.invoke({"input": query})
+
+        # Here, we'll print the entire response object, but normally you would only deal with the
+        # answer: resp["answer"]
         print(resp)
