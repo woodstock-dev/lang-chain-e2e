@@ -35,8 +35,8 @@ from langchain_ollama import OllamaEmbeddings
 DB_DIRECTORY = 'db'
 DOCUMENT_SOURCE_DIRECTORY = 'third_party/books'
 
-CHUNK_SIZE=2000
-CHUNK_OVERLAP=50
+CHUNK_SIZE=1500
+CHUNK_OVERLAP=100
 HIDE_SOURCE_DOCUMENTS=False
 
 embeddingModel = OllamaEmbeddings(model="llama3.2")
@@ -140,3 +140,5 @@ def main():
         # Here, we'll print the entire response object, but normally you would only deal with the
         # answer: resp["answer"]
         print(resp)
+        print()
+        print(resp['answer'])
